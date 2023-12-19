@@ -21,6 +21,8 @@
             <option value="1,2">Numeri e caratteri</option>
             <option value="0,1,2">Lettere, numeri e caratteri</option>
         </select>
+        <label for="repeat">Caratteri tutti diversi</label>
+        <input id="repeat" name="repeat" type="checkbox" value="true">
         <button type="submit">Genera</button>
     </form>
 </body>

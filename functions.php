@@ -13,10 +13,38 @@ function generatePassword()
             $characters_allowed[] = $characters[$which_characters_explode[$i]][$index];
         }
     }
+    $repeat = isset($_GET["repeat"]) ? $_GET["repeat"] : false;
+    $numbers_alredy_created = [];
+    $puoi_pushare = true;
+    $show_message = true;
     $password = "";
     for ($i = 0; $i < $_GET["length"]; $i++) {
         $randomNumber = rand(0, (sizeof($characters_allowed) - 1));
-        $password = $password . $characters_allowed[$randomNumber];
+        if ($repeat == true) {
+            if ($_GET["length"] <= sizeof($characters_allowed)) {
+                for ($index = 0; $index < sizeof($numbers_alredy_created); $index++) {
+                    if ($randomNumber == $numbers_alredy_created[$index]) {
+                        $puoi_pushare = false;
+                        $i--;
+                        break;
+                    } else {
+                        $puoi_pushare = true;
+                    }
+                }
+                if ($puoi_pushare == true) {
+                    $numbers_alredy_created[] = $randomNumber;
+                    $password = $password . $characters_allowed[$randomNumber];
+                }
+            } else {
+                $show_message = false;
+                echo "Inserisci una lunghezza minore per la tua password";
+                break;
+            }
+        } else {
+            $password = $password . $characters_allowed[$randomNumber];
+        }
     }
-    echo "La tua nuova password è <strong>" . $password . "</strong>";
+    if ($show_message == true) {
+        echo "La tua nuova password è <strong>" . $password . "</strong>";
+    }
 }
